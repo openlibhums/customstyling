@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 
 from plugins.customstyling import forms, models
 from journal import models as jm
 
 
+@staff_member_required
 def manager(request):
     template = 'customstyling/manager.html'
     context = {
@@ -14,6 +16,7 @@ def manager(request):
     return render(request, template, context)
 
 
+@staff_member_required
 def manage_css(request, journal_id):
     journal = get_object_or_404(
         jm.Journal,
