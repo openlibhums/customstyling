@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
-from plugins.customstyling import forms, models
+from plugins.customstyling import forms
 from journal import models as jm
 
 
@@ -22,25 +22,21 @@ def manage_css(request, journal_id):
         jm.Journal,
         pk=journal_id,
     )
-    custom_styling, c = models.CustomStyling.objects.get_or_create(
-        journal=journal,
-    )
     form = forms.StylingForm(
-        instance=custom_styling,
+        journal=request.journal
     )
     if request.POST:
         form = forms.StylingForm(
             request.POST,
-            instance=custom_styling,
+            journal=request.journal
         )
         if form.is_valid():
-            custom_styling = form.save()
+            form.save()
             messages.add_message(
                 request,
                 messages.SUCCESS,
                 'Saved.',
             )
-            custom_styling.write_to_disk()
             return redirect(
                 reverse(
                     'customstyling_manage_css',
@@ -52,7 +48,6 @@ def manage_css(request, journal_id):
     template = 'customstyling/manage_css.html'
     context = {
         'journal': journal,
-        'custom_styling': custom_styling,
         'form': form,
     }
     return render(request, template, context)

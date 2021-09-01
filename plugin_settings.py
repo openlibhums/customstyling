@@ -1,3 +1,7 @@
+import os
+
+from django.conf import settings
+
 from utils import plugins
 
 PLUGIN_NAME = 'Custom Styling Plugin'
@@ -8,6 +12,10 @@ VERSION = '0.1'
 SHORT_NAME = 'customstyling'
 MANAGER_URL = 'customstyling_manager'
 JANEWAY_VERSION = "1.3.8"
+BASE_CSS_PATH = os.path.join(
+    settings.MEDIA_ROOT,
+    'customstyling',
+)
 
 
 class CustomstylingPlugin(plugins.Plugin):
