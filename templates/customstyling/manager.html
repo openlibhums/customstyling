@@ -1,0 +1,20 @@
+{% extends "admin/core/base.html" %}
+{% load foundation %}
+
+{% block title %}{% trans 'Custom Styling' %}{% endblock %}
+
+{% block body %}
+<div class="box">
+    <div class="title-area">
+        <h2>{% trans 'Custom Styling' %}</h2>
+    </div>
+    <div class="content">
+        <p>{% trans 'Select a journal to manage custom CSS for.' %}</p>
+        <ul>
+            {% for journal in journals %}
+            <li><a href="{% url 'customstyling_manage_css' journal.pk %}">{{ journal.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock body %}
