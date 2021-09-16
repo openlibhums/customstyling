@@ -9,6 +9,12 @@ from journal import models as jm
 @staff_member_required
 def manager(request):
     template = 'customstyling/manager.html'
+    if request.journal:
+        return redirect(reverse(
+            'customstyling_manage_css',
+            kwargs={ 'journal_id': request.journal.pk},
+        ))
+
     context = {
         'journals': jm.Journal.objects.all(),
     }
