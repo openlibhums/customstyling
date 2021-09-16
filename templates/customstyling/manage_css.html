@@ -1,5 +1,6 @@
 {% extends "admin/core/base.html" %}
 {% load foundation %}
+{% load static %}
 
 {% block title %}{% trans 'Custom Styling for' %} {{ journal.name }}{% endblock %}
 
@@ -9,6 +10,7 @@
         font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
     }
 </style>
+{{form.media}}
 {% endblock css %}
 
 
@@ -21,7 +23,7 @@
         <p>This section is for advanced users only. If you don't know how to write CSS then this is best left alone. If you want to learn check out the <a target="_blank" href="https://www.w3schools.com/css/">W3C CSS Tutorial</a>.</p>
         <form method="POST">
             {% csrf_token %}
-            {{ form }}
+            {{ form.as_p }}
             <button class="success button">Save</button>
         </form>
 
@@ -30,21 +32,18 @@
 {% endblock body %}
 
 {% block js %}
+<script type="text/javascript" src="{% static "common/js/jquery-te-1.4.0.min.js" %}" charset="utf-8"></script>
 <script>
-    document.getElementById('id_css').addEventListener('keydown', function (e) {
-        if (e.key == 'Tab') {
-            e.preventDefault();
-            var start = this.selectionStart;
-            var end = this.selectionEnd;
-
-            // set textarea value to: text before caret + tab + text after caret
-            this.value = this.value.substring(0, start) +
-                "\t" + this.value.substring(end);
-
-            // put caret at right position again
-            this.selectionStart =
-                this.selectionEnd = start + 1;
-        }
+    (function(){
+    $(document).ready(function(){
+        $('textarea.code-editor').each(function(idx, el){
+            CodeMirror.fromTextArea(el, {
+                lineNumbers: true,
+                mode: 'css',
+                theme: 'nord'
+            });
+        });
     });
+})();
 </script>
 {% endblock js %}

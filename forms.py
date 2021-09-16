@@ -2,12 +2,12 @@ import os
 
 from django import forms
 
-from plugins.customstyling import plugin_settings
+from plugins.customstyling import plugin_settings, widgets
 
 
 class StylingForm(forms.Form):
     css = forms.CharField(
-        widget=forms.Textarea,
+        widget=widgets.CodeEditor,
     )
 
     def __init__(self, *args, **kwargs):
