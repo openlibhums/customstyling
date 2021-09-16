@@ -3,6 +3,15 @@
 
 {% block title %}{% trans 'Custom Styling for' %} {{ journal.name }}{% endblock %}
 
+{% block css %}
+<style>
+    textarea {
+        font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    }
+</style>
+{% endblock css %}
+
+
 {% block body %}
 <div class="box">
     <div class="title-area">

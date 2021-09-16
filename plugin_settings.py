@@ -16,6 +16,10 @@ BASE_CSS_PATH = os.path.join(
     settings.MEDIA_ROOT,
     'customstyling',
 )
+CSS_MEDIA_PATH = os.path.join(
+    settings.MEDIA_URL,
+    'customstyling',
+)
 
 
 class CustomstylingPlugin(plugins.Plugin):

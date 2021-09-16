@@ -23,12 +23,12 @@ def manage_css(request, journal_id):
         pk=journal_id,
     )
     form = forms.StylingForm(
-        journal=request.journal
+        journal=journal
     )
     if request.POST:
         form = forms.StylingForm(
             request.POST,
-            journal=request.journal
+            journal=journal
         )
         if form.is_valid():
             form.save()

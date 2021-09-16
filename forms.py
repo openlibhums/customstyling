@@ -23,6 +23,8 @@ class StylingForm(forms.Form):
             with open(open_path) as css_file:
                 css = css_file.read()
                 self.fields['css'].initial = css
+        else:
+            self.fields['css'].initial = ''
 
     def save(self):
         css = self.cleaned_data['css']
