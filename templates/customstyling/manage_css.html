@@ -5,11 +5,6 @@
 {% block title %}{% trans 'Custom Styling for' %} {{ journal.name }}{% endblock %}
 
 {% block css %}
-<style>
-    textarea {
-        font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-    }
-</style>
 {{form.media}}
 {% endblock css %}
 
@@ -35,12 +30,13 @@
 <script type="text/javascript" src="{% static "common/js/jquery-te-1.4.0.min.js" %}" charset="utf-8"></script>
 <script>
     (function(){
+    let matched = window.matchMedia('(prefers-color-scheme: dark)').matches;
     $(document).ready(function(){
         $('textarea.code-editor').each(function(idx, el){
             CodeMirror.fromTextArea(el, {
                 lineNumbers: true,
                 mode: 'css',
-                theme: 'nord'
+                theme: (matched) ? 'nord':'solarized'
             });
         });
     });

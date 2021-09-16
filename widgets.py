@@ -11,6 +11,7 @@ class CodeEditor(forms.Textarea):
             'all': (
                 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.css',
                 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/theme/nord.min.css',
+                'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/theme/solarized.min.css',
             )
         }
         js = (
