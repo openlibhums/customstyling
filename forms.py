@@ -24,7 +24,7 @@ class StylingForm(forms.Form):
                 css = css_file.read()
                 self.fields['css'].initial = css
         else:
-            self.fields['css'].initial = ''
+            self.fields['css'].initial = '// Insert CSS Below'
 
     def save(self):
         css = self.cleaned_data['css']
