@@ -12,7 +12,7 @@ def manager(request):
     if request.journal:
         return redirect(reverse(
             'customstyling_manage_css',
-            kwargs={ 'journal_id': request.journal.pk},
+            kwargs={'journal_id': request.journal.pk},
         ))
 
     context = {
@@ -54,6 +54,33 @@ def manage_css(request, journal_id):
     template = 'customstyling/manage_css.html'
     context = {
         'journal': journal,
+        'form': form,
+    }
+    return render(request, template, context)
+
+
+@staff_member_required
+def manage_press_css(request):
+    form = forms.StylingForm()
+    if request.POST:
+        form = forms.StylingForm(
+            request.POST,
+        )
+        if form.is_valid():
+            form.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Saved.',
+            )
+            return redirect(
+                reverse(
+                    'customstyling_manage_press_css',
+                )
+            )
+
+    template = 'customstyling/manage_css.html'
+    context = {
         'form': form,
     }
     return render(request, template, context)

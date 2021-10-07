@@ -9,8 +9,10 @@
         <h2>{% trans 'Custom Styling' %}</h2>
     </div>
     <div class="content">
+
         <p>{% trans 'Select a journal to manage custom CSS for.' %}</p>
         <ul>
+            <li><a href="{% url 'customstyling_manage_press_css' %}">{{ request.press.name }}</a></li>
             {% for journal in journals %}
             <li><a href="{% url 'customstyling_manage_css' journal.pk %}">{{ journal.name }}</a></li>
             {% endfor %}
