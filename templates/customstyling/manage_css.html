@@ -15,6 +15,7 @@
         <h2>{% trans 'Custom Styling for' %} {{ journal.name }}</h2>
     </div>
     <div class="content">
+        {% include "admin/elements/forms/errors.html" with form=form %}
         <p>This section is for advanced users only. If you don't know how to write CSS then this is best left alone. If you want to learn check out the <a target="_blank" href="https://www.w3schools.com/css/">W3C CSS Tutorial</a>.</p>
         <form method="POST">
             {% csrf_token %}

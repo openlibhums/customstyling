@@ -32,6 +32,7 @@ class CustomstylingPlugin(plugins.Plugin):
 
     version = VERSION
     janeway_version = JANEWAY_VERSION
+    press_wide = True
     
 
 def install():

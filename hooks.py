@@ -9,5 +9,7 @@ def inject_css(context):
         return '<link href="{}" rel="stylesheet">'.format(
             os.path.join(plugin_settings.CSS_MEDIA_PATH, str(request.journal.pk), 'custom.css')
         )
-
-    return ''
+    else:
+        return '<link href="{}" rel="stylesheet">'.format(
+            os.path.join(plugin_settings.CSS_MEDIA_PATH, 'press', 'custom.css')
+        )
