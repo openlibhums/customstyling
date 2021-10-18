@@ -8,6 +8,11 @@
 {{form.media}}
 {% endblock css %}
 
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url 'customstyling_manager' %}">Custom Styling Plugin</a>
+    </li>
+{% endblock %}
 
 {% block body %}
 <div class="box">
