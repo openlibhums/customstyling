@@ -15,6 +15,7 @@
             <h2>{% trans 'Cross Site Stylesheets' %}</h2>
         </div>
         <div class="content">
+            <a href="{% url 'customstyling_settings' %}" class="button">Plugin Settings</a>
             <a href="{% url 'customstyling_new_lcjsc' %}" class="button">Add New Stylesheet</a>
             <ul>
                 {% for cjs in cjs_list %}

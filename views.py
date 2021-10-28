@@ -2,19 +2,16 @@ from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
-from plugins.customstyling import forms, models
+from plugins.customstyling import forms, models, security, plugin_settings
 from journal import models as jm
+from utils import setting_handler
+from core.forms import GeneratedSettingForm
 
 
-@staff_member_required
+@security.user_is_staff_or_journal_editor
 def manager(request):
     cjs_list = models.CrossJournalStylesheet.objects.all()
     template = 'customstyling/manager.html'
-    if request.journal:
-        return redirect(reverse(
-            'customstyling_manage_css',
-            kwargs={'journal_id': request.journal.pk},
-        ))
 
     context = {
         'journals': jm.Journal.objects.all(),
@@ -25,6 +22,48 @@ def manager(request):
 
 
 @staff_member_required
+def settings(request):
+    form_settings = [
+        {
+            'name': 'enable_editor_access',
+            'object': setting_handler.get_setting(
+                plugin_settings.CustomstylingPlugin.plugin_group_name,
+                'enable_editor_access',
+                request.journal,
+            ),
+        },
+    ]
+    form = GeneratedSettingForm(
+        settings=form_settings,
+    )
+    if request.POST:
+        form = GeneratedSettingForm(
+            request.POST,
+            settings=form_settings,
+        )
+        if form.is_valid():
+            form.save(
+                journal=request.journal,
+                group=plugin_settings.CustomstylingPlugin.plugin_group_name,
+            )
+            return redirect(
+                reverse(
+                    'customstyling_settings'
+                )
+            )
+
+    template = 'customstyling/settings.html'
+    context = {
+        'form': form,
+    }
+    return render(
+        request,
+        template,
+        context,
+    )
+
+
+@security.staff_or_editor_access_enabled
 def manage_css(request, journal_id):
     journal = get_object_or_404(
         jm.Journal,

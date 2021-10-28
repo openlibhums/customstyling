@@ -2,7 +2,7 @@ import os
 
 from django.conf import settings
 
-from utils import plugins
+from utils import plugins, setting_handler
 
 PLUGIN_NAME = 'Custom Styling Plugin'
 DISPLAY_NAME = 'Custom Styling'
@@ -33,10 +33,20 @@ class CustomstylingPlugin(plugins.Plugin):
     version = VERSION
     janeway_version = JANEWAY_VERSION
     press_wide = True
+    plugin_group_name = 'plugin:{plugin_name}'.format(plugin_name=SHORT_NAME)
     
 
 def install():
     CustomstylingPlugin.install()
+    setting_handler.create_setting(
+        setting_group_name=CustomstylingPlugin.plugin_group_name,
+        setting_name='enable_editor_access',
+        pretty_name='Enable Editor Access',
+        type='boolean',
+        description='If enabled, editors can access the css plugin.',
+        is_translatable=False,
+        default_value=' ',
+    )
 
 
 def hook_registry():
