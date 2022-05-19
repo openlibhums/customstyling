@@ -32,7 +32,7 @@ class StylingForm(forms.Form):
                 css = css_file.read()
                 self.fields['css'].initial = css
         else:
-            self.fields['css'].initial = '// Insert CSS Below'
+            self.fields['css'].initial = '/* Insert CSS Below */'
 
     def save(self):
         css = self.cleaned_data['css']
@@ -87,7 +87,7 @@ class CrossJournalStylingForm(forms.ModelForm):
                 css = css_file.read()
                 self.fields['css'].initial = css
         else:
-            self.fields['css'].initial = '// Insert CSS Below'
+            self.fields['css'].initial = '/* Insert CSS Below */'
 
     def save(self, commit=True):
         stylesheet = super(CrossJournalStylingForm, self).save(commit=False)
