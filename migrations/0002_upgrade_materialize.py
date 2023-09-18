@@ -40,6 +40,20 @@ def change_old_to_new_css_selectors(file_paths, reverse=False):
                         line = line.replace(old, new)
                     new_css.append(line)
             if css != new_css:
+                backup_file_folder = os.path.join(
+                    os.path.dirname(file_path),
+                    'temp',
+                )
+                if not os.path.exists(backup_file_folder):
+                    os.mkdir(backup_file_folder)
+                backup_file_path = os.path.join(
+                    backup_file_folder,
+                    os.path.basename(file_path),
+                )
+                with open(backup_file_path, 'w', encoding="utf-8") as file_ref:
+                    file_ref.writelines(css)
+                logger.info(f'Original backed up to {backup_file_path}')
+
                 with open(file_path, 'w', encoding="utf-8") as file_ref:
                     file_ref.writelines(new_css)
                 logger.info(f'Stylesheet modified at {file_path}')
