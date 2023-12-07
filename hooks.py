@@ -19,6 +19,15 @@ def inject_css(context):
         html += '<link href="{}" rel="stylesheet">\n'.format(
             os.path.join(plugin_settings.CSS_MEDIA_PATH, str(request.journal.pk), 'custom.css')
         )
+    elif request.repository:
+        html += '<link href="{}" rel="stylesheet">\n'.format(
+            os.path.join(
+                plugin_settings.CSS_MEDIA_PATH,
+                'repositories',
+                str(request.repository.pk),
+                'custom.css',
+            )
+        )
     else:
         html += '<link href="{}" rel="stylesheet">\n'.format(
             os.path.join(plugin_settings.CSS_MEDIA_PATH, 'press', 'custom.css')

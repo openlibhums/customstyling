@@ -4,6 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from plugins.customstyling import forms, models, security, plugin_settings
 from journal import models as jm
+from repository import models as rm
 from utils import setting_handler
 from core.forms import GeneratedSettingForm
 
@@ -15,6 +16,7 @@ def manager(request):
 
     context = {
         'journals': jm.Journal.objects.all(),
+        'repositories': rm.Repository.objects.all(),
         'cjs_list': cjs_list,
     }
 
@@ -64,18 +66,27 @@ def settings(request):
 
 
 @security.staff_or_editor_access_enabled
-def manage_css(request, journal_id):
-    journal = get_object_or_404(
-        jm.Journal,
-        pk=journal_id,
-    )
+def manage_css(request, journal_id=None, repository_id=None):
+    journal = repository = None
+    if journal_id:
+        journal = get_object_or_404(
+            jm.Journal,
+            pk=journal_id,
+        )
+    elif repository_id:
+        repository = get_object_or_404(
+            rm.Repository,
+            pk=repository_id
+        )
     form = forms.StylingForm(
-        journal=journal
+        journal=journal,
+        repository=repository,
     )
     if request.POST:
         form = forms.StylingForm(
             request.POST,
-            journal=journal
+            journal=journal,
+            repository=repository,
         )
         if form.is_valid():
             form.save()
@@ -84,13 +95,22 @@ def manage_css(request, journal_id):
                 messages.SUCCESS,
                 'Saved.',
             )
-            return redirect(
-                reverse(
-                    'customstyling_manage_css',
+            if journal:
+                reversed_url = reverse(
+                    'customstyling_manage_css_journal',
                     kwargs={
                         'journal_id': journal.pk,
                     }
                 )
+            elif repository:
+                reversed_url = reverse(
+                    'customstyling_manage_css_repository',
+                    kwargs={
+                        'repository_id': repository.pk,
+                    }
+                )
+            return redirect(
+                reversed_url
             )
     template = 'customstyling/manage_css.html'
     context = {
