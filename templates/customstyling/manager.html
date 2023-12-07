@@ -38,10 +38,32 @@
 
             <p>{% trans 'Select a journal to manage custom CSS for.' %}</p>
             <ul>
-                <li><a href="{% url 'customstyling_manage_press_css' %}">{{ request.press.name }}</a></li>
-                {% for journal in journals %}
-                    <li><a href="{% url 'customstyling_manage_css' journal.pk %}">{{ journal.name }}</a></li>
-                {% endfor %}
+                <li>
+                    Press
+                    <ul>
+                        <li>
+                            <a href="{% url 'customstyling_manage_press_css' %}">{{ request.press.name }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Journals
+                    <ul>
+                        {% for journal in journals %}
+                            <li>
+                                <a href="{% url 'customstyling_manage_css_journal' journal.pk %}">{{ journal.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li>
+                    Repositories
+                    <ul>
+                        {%  for repository in repositories %}
+                            <a href="{% url 'customstyling_manage_css_repository' repository.pk %}">{{ repository.name }}</a>
+                        {% endfor %}
+                    </ul>
+                </li>
             </ul>
         </div>
 

@@ -13,11 +13,19 @@ class StylingForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.journal = kwargs.pop('journal', None)
+        self.repository = kwargs.pop('repository', None)
         super(StylingForm, self).__init__(*args, **kwargs)
         if self.journal:
             open_path = os.path.join(
                 plugin_settings.BASE_CSS_PATH,
                 str(self.journal.pk),
+                'custom.css',
+            )
+        elif self.repository:
+            open_path = os.path.join(
+                plugin_settings.BASE_CSS_PATH,
+                'repositories',
+                str(self.repository.pk),
                 'custom.css',
             )
         else:
@@ -41,6 +49,12 @@ class StylingForm(forms.Form):
             path = os.path.join(
                 plugin_settings.BASE_CSS_PATH,
                 str(self.journal.pk),
+            )
+        elif self.repository:
+            path = os.path.join(
+                plugin_settings.BASE_CSS_PATH,
+                'repositories',
+                str(self.repository.pk),
             )
         else:
             path = os.path.join(
