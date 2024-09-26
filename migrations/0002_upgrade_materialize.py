@@ -89,11 +89,14 @@ def find_and_handle_custom_stylesheets(apps, schema_editor, reverse=False):
     # logger.info('Checking custom journal stylesheets')
     for journal in Journal.objects.all():
         journal_id = journal.id
-        theme = SettingValue.objects.get(
-            setting__group__name='general',
-            setting__name='journal_theme',
-            journal__id=journal_id,
-        )
+        try:
+            theme = SettingValue.objects.get(
+                setting__group__name='general',
+                setting__name='journal_theme',
+                journal__id=journal_id,
+            )
+        except SettingValue.DoesNotExist:
+            continue
         if theme.value == 'material':
             stylesheet_paths = [
                 os.path.join(
