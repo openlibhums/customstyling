@@ -8,10 +8,10 @@ PLUGIN_NAME = 'Custom Styling Plugin'
 DISPLAY_NAME = 'Custom Styling'
 DESCRIPTION = 'Allows staff to add custom css to journals.'
 AUTHOR = 'Andy Byers'
-VERSION = '1.0'
+VERSION = '1.1.1'
 SHORT_NAME = 'customstyling'
 MANAGER_URL = 'customstyling_manager'
-JANEWAY_VERSION = "1.5.0"
+JANEWAY_VERSION = "1.7.0"
 BASE_CSS_PATH = os.path.join(
     settings.MEDIA_ROOT,
     'customstyling',
