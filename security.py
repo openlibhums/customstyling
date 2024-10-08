@@ -30,7 +30,7 @@ def user_is_staff_or_journal_editor(func):
             if editor_acccess_enabled and request.user.is_editor(request):
                 return redirect(
                     reverse(
-                        'customstyling_manage_css',
+                        'customstyling_manage_css_journal',
                         kwargs={
                             'journal_id': request.journal.pk,
                         }
