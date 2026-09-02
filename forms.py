@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from plugins.customstyling import plugin_settings, widgets, models
+from utils import shared
 
 
 class StylingForm(forms.Form):
@@ -70,6 +71,9 @@ class StylingForm(forms.Form):
             css_file.write(css)
             css_file.close()
 
+        # Bust the memoised base_head_css hook output.
+        shared.clear_cache()
+
 
 class CrossJournalStylingForm(forms.ModelForm):
     css = forms.CharField(
@@ -121,5 +125,8 @@ class CrossJournalStylingForm(forms.ModelForm):
 
         if commit:
             stylesheet.save()
+
+        # Bust the memoised base_head_css hook output.
+        shared.clear_cache()
 
         return stylesheet
