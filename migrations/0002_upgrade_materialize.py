@@ -128,7 +128,7 @@ def find_and_handle_custom_stylesheets(apps, schema_editor, reverse=False):
 
     # logger.info('Checking custom press stylesheets')
     press = Press.objects.first()
-    if press.theme == 'material':
+    if press and press.theme == 'material':
         stylesheet_paths = [
             os.path.join(
                 settings.BASE_DIR,
